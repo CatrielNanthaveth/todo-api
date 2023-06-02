@@ -1,5 +1,5 @@
 const express = require('express');
-const pg = require('pg');
+const cors = require('cors');
 const morgan = require('morgan');
 
 const taskRoutes = require('./routes/tasks.routes');
@@ -8,6 +8,7 @@ const port = process.env.PORT || 3000;
 
 const app = express();
 
+app.use(cors());
 app.use(morgan('dev'));
 app.use(express.json());
 

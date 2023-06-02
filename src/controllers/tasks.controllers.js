@@ -38,7 +38,7 @@ const createTask = async (req, res) => {
 
 const deleteTask = async (req, res) => {
     const task_id = req.params.id;
-    
+
     const result = await pool.query(`DELETE FROM tasks WHERE id = ${task_id}`);
 
     if (result.rowCount === 0) return res.status(404).json({
@@ -48,8 +48,17 @@ const deleteTask = async (req, res) => {
     res.sendStatus(204);
 };
 
-const updateTask = (req, res) => {
-    res.send('updating a task');
+const updateTask = async (req, res) => {
+    const task_id = req.params.id;
+    const { title, description} = req.body; 
+
+    const result = await pool.query(`UPDATE tasks SET title = ${title}, description = ${description} WHERE id = ${task_id} RETURNING *` );
+    
+    if (result.rowCount === 0) return res.status(404).json({
+        message: 'Task not found'
+    });
+
+    res.json(result.rows[0])
 };
 
 module.exports = {

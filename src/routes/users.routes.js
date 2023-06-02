@@ -3,14 +3,14 @@ const { getAllUsers, getSingleUser, createUser, deleteUser, updateUser } = requi
 
 const router = Router();
 
-router.get('/Users', getAllUsers);
+router.get('/users', getAllUsers);
 
-router.get('/Users/:id', getSingleTask);
+router.get('/users/:id', getSingleUser);
 
-router.post('/Users', createTask);
+router.post('/users', createUser);
 
-router.delete('/Users/:id', deleteTask);
+router.delete('/users/:id', deleteUser);
 
-router.put('/Users/:id', updateTask);
+router.put('/users/:id', updateUser);
 
 module.exports = router;

@@ -1,4 +1,6 @@
 const pool = require('../db');
+const jwt = require('jsonwebtoken');
+require('dotenv').config({ path: '.env' });
 
 const getAllUsers = async (req, res, next) => {
     try {
@@ -28,7 +30,11 @@ const createUser = async (req, res, next) => {
 
     try {
         const result = await pool.query(`INSERT INTO users (email, username, password) VALUES ('${email}', '${username}', '${password}') RETURNING * ;`);
-        res.json(result.rows[0]);
+        const token = jwt.sign({id: result.rows[0].id}, process.env.SECRET, {
+            expiresIn: 86400 //24 horas
+        })
+
+        res.json({token});
     } catch (error) {
         next(error);
     };

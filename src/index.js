@@ -23,7 +23,7 @@ app.use(userRoutes);
 app.use(authRoutes)
 
 app.use((err, req, res, next) => {
-    return res.json({
+    return res.status(400).json({
         message: err.message
     })
 })

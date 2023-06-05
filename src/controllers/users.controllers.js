@@ -29,12 +29,17 @@ const createUser = async (req, res, next) => {
     const { email, username, password } = req.body;
 
     try {
+
+        const user = await pool.query(`SELECT * FROM users WHERE email = '${req.body.email}'`);
+
+        if (user.rows[0]) return res.status(400).json({ message: "Account already created" });
+
         const result = await pool.query(`INSERT INTO users (email, username, password) VALUES ('${email}', '${username}', '${password}') RETURNING * ;`);
-        const token = jwt.sign({id: result.rows[0].id}, process.env.SECRET, {
+        const token = jwt.sign({ id: result.rows[0].id }, process.env.SECRET, {
             expiresIn: 86400 //24 horas
         })
 
-        res.json({token});
+        res.json({ token });
     } catch (error) {
         next(error);
     };

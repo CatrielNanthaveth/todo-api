@@ -7,7 +7,7 @@ router.get('/tasks', getAllTasks);
 
 router.get('/tasks/:id', getSingleTask);
 
-router.get('/tasks/:user_id', getUserTasks);
+router.get('/tasks/user/:user_id', getUserTasks);
 
 router.post('/tasks', createTask);
 

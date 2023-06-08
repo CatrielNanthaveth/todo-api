@@ -71,10 +71,10 @@ const deleteTask = async (req, res, next) => {
 const updateTask = async (req, res, next) => {
     try {
         const task_id = req.params.id;
-        const { title, description } = req.body;
+        const { title, description, completed } = req.body;
 
-        const query = 'UPDATE tasks SET title = $1, description = $2 WHERE id = $3 RETURNING *;';
-        const values = [title, description, task_id];
+        const query = 'UPDATE tasks SET title = $1, description = $2, completed = $3 WHERE id = $4 RETURNING *;';
+        const values = [title, description, completed, task_id];
         const result = await pool.query(query, values);
 
         if (result.rowCount === 0) return res.status(404).json({
